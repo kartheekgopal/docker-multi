@@ -13,3 +13,11 @@ after_success:
     - docker build -t kartheekgopal/multi-nginx ./nginx
     - docker build -t kartheekgopal/multi-server ./server
     - docker build -t kartheekgopal/multi-worker ./worker
+
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+    - docker push kartheekgopal/multi-client
+    - docker push kartheekgopal/multi-nginx
+    - docker push kartheekgopal/multi-server
+    - docker push kartheekgopal/multi-worker
+
