@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t kartheekgopal/multi-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run kartheekgopal/multi-test npm test -- --coverage
+
+after_success:
+    - docker build -t kartheekgopal/multi-client ./client
+    - docker build -t kartheekgopal/multi-nginx ./nginx
+    - docker build -t kartheekgopal/multi-server ./server
+    - docker build -t kartheekgopal/multi-worker ./worker
